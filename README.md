@@ -15,17 +15,41 @@ Ejercicios básicos
 
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
 
+A continuación mostramos el código correspondiente:
+
+<img width="741" alt="Captura de Pantalla 2021-11-21 a les 18 05 59" src="https://user-images.githubusercontent.com/91251152/142771857-d7c8ba22-d566-46d8-9e86-b9748fda69d6.png">
+
+
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
 	 autocorrelación de la señal y la posición del primer máximo secundario.
 
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la librería matplotlib de Python.
+	 
+	 *****Captura 2*****
+	 
+	 *****Captura 3*****
+	 
+	 Para poder observar el primer máximo secundario de forma nítida hacemos zoom en la primera parte:
+	 
+	  *****Captura 4*****
+	  
+	  *****Captura 5*****
+	  
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
+     
+       *****Captura 6*****
+     
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+
+   Para el caso de las tramas sonoras detectadas como sordas (UV), consideramos que la mejor opción es diferenciarlas aplicando autocorrelaciones. Con tal de poder descartar la mayoría de las tramas sonoras que detectamos como sordas (VU), creeemos que una buena opción es usando la potencia.
+   
+          *****Captura 7*****
+	  
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
@@ -42,10 +66,32 @@ Ejercicios básicos
 
 	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
 		en esta práctica es de 15 ms.
+		
+	Si nos fijamos en la potencia, podemos apreciar de forma bastante clara la diferencia de potencia entre los intervalos silenciosos y sonoros.
+	*****falta comentar mas cosas******
+	
+	Utilizamos la libreria de entrada/salida de C++ con tal de poder conseguir los valores de la autocorrelacion, ademas, empleamos la funcion cout que nos permite mostrar por consola la informacion para cada trama.
+	
+	*****Captura 8*****
+	
+	A continuacion, mediante la terminal conseguimos que la salida se escriba en un fichero .out en vez de mostrarla en la terminal. Mas adelante, para poder observar la funcion r(lag)/r(0) y r(1)/r(0), mediante el comando cut reducimos las columnas en cuestion y lo colocamos en otros dos archivos que finalmente los añadiremos en el wavesurfer
+	
+	*****Captura 9*****
+	
+	En la primera grafica observamos la potencia, en la segunda vemos r1norm, en la tercera rmaxnorm y la ultima la señal rl001.wav:
+	
+	*****Captura 10*****
+	
+	Obervamos que donde tenemos segmentos sonoros, tanto la autocorrelacion normalizadas de 1 como la normalizada en el pitch tienen un valor cercano a 1. Esto tiene todo el sentido del mundo, ya que las muestras cercanas de las tramas de voz son muy parecidas entre ellas.
+	
 
       - Use el detector de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
 		ilustrativa del resultado de ambos detectores.
+		
+	A continuacion vemos la estimacion del pitch de wavesurfer, la estimacion de pitch de nuestra mejor version y por ultimo la señal rl001.wav:
+		
+	*****Captura 11*****	
   
   * Optimice los parámetros de su sistema de detección de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
