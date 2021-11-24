@@ -12,7 +12,7 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) { //r es un vector
   		/// \TODO Compute the autocorrelation r[l] 
-      /// \DONE Hemos implementado la autocorrelacion de una señal real
+      /// \DONE Hemos implementado la autocorrelacion de una señal real.
       r[l]=0;
 
       for(unsigned int n = 0; n < x.size()-l; n++){
@@ -37,7 +37,7 @@ namespace upc {
       for (unsigned int i = 0; i < frameLen; i++){
         window[i] = 0.54 - 0.46 * cos((2 * M_PI * i) / (frameLen - 1));
       }
-      /// \DONE Hamming window implemented
+      /// \DONE Ventana de Hamming implementada.
       break;
     case RECT:
     default:
@@ -62,10 +62,17 @@ namespace upc {
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
     
-    if(rmaxnorm > thresh1)
-    return false;
+    //if(rmaxnorm > thresh1)
+    //return false;
+    //else
+    //return true;
+
+    if(pot < thresh_p || r1norm < thresh_r1 || rmaxnorm < thresh1)
+    return true; // Significa que esta dentro de umbrales, entonces es silencio o sorda
     else
-    return true;
+    return false; // Significa que esta fuera de umbrales, entonces es voz o sonora
+    
+    /// \DONE Al tener los valores de la potencia y las autocorrelaciones, podemos ver si es voz o no.
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
@@ -96,6 +103,7 @@ namespace upc {
       iRMax = iR;
     }
   }
+  /// \DONE Encontramos el primer máximo secundario de la autocorrelación sin tener en cuenta el del origen para encontrar el pitch.
 
     unsigned int lag = iRMax - r.begin();
 
@@ -106,7 +114,7 @@ namespace upc {
     //You can print these (and other) features, look at them using wavesurfer
     //Based on that, implement a rule for unvoiced
     //change to #if 1 and compile
-#if 0
+#if 1
     if (r[0] > 0.0F)
       cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;
 #endif

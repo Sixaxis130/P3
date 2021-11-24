@@ -25,7 +25,10 @@ Usage:
     get_pitch --version
 
 Options:
-    -1 FLOAT, --thresh1 FLOAT  Umbral sonoro sordo para rmaxnorm [default: 0.5]
+    -1 FLOAT, --thresh1 FLOAT  Umbral sonoro sordo para autocorrelacion normalizada en pitch (rmaxnorm) [default: 0.38]
+    -2 FLOAT, --thresh_r1 FLOAT  Umbral para autocorrelacion normalizada en 1 (r1norm) [default: 0.8]
+    -3 FLOAT, --thresh_p FLOAT  Umbral dBs para potencia (pot) [default: -20.0]
+    -4 FLOAT, --thresh_x FLOAT  Umbral center-clipping [default: 0.00007]
     -h, --help  Show this screen
     --version   Show the version of the project
 
@@ -47,8 +50,12 @@ int main(int argc, const char *argv[]) {
 
 	std::string input_wav = args["<input-wav>"].asString();
 	std::string output_txt = args["<output-txt>"].asString();
-  float thresh1= atof(args["--thresh1"].asString().c_str());
+  float rl = atof(args["--thresh1"].asString().c_str());
+  float r1 = atof(args["--thresh_r1"].asString().c_str());
+  float p = atof(args["--thresh_p"].asString().c_str());
+  float thresh_x = atof(args["--thresh_x"].asString().c_str());
 
+  /// \DONE Pasamos los parámetros por shell.
   // Read input sound file
   unsigned int rate;
   vector<float> x;
@@ -61,13 +68,36 @@ int main(int argc, const char *argv[]) {
   int n_shift = rate * FRAME_SHIFT;
 
   // Define analyzer
-  PitchAnalyzer analyzer(n_len, rate, PitchAnalyzer::HAMMING, 50, 500);
-  analyzer.thresh1 = thresh1;
+  PitchAnalyzer analyzer(n_len, rate, p, r1, rl, PitchAnalyzer::HAMMING, 50, 500);
+  //analyzer.thresh1 = thresh1;
+
 
   /// \TODO
   /// Preprocess the input signal in order to ease pitch estimation. For instance,
   /// central-clipping or low pass filtering may be used.
   
+  #if 0
+  float thresh_x = 0.00005;
+  for (unsigned int n = 0; n < x.size(); n++){
+    if(x[n] > thresh_x){
+      x[n] = x[n] - thresh_x;
+    }else if(x[n] < -thresh_x){
+      x[n] = x[n] + thresh_x;
+    }else
+    x[n] = 0;
+  }
+  /// \DONE Center clipping implementado con offset.
+  #endif
+
+   #if 1
+  for (unsigned int n = 0; n < x.size(); n++){
+    if(x[n] < thresh_x && x[n] > -thresh_x){
+      x[n] = 0;
+    }
+  }
+  /// \DONE Center clipping implementado sin offset.
+  #endif
+
   // Iterate for each frame and save values in f0 vector
   vector<float>::iterator iX;
   vector<float> f0;
@@ -79,6 +109,27 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
+
+#if 1
+  for (unsigned int i = 1; i < f0.size() - 1; i++)
+  {
+    vector<float> arr;
+    arr.push_back(f0[i]);
+    arr.push_back(f0[i + 1]);
+    arr.push_back(f0[i - 1]);
+
+    if (arr[1] < arr[0])
+      swap(arr[0], arr[1]);
+
+    if (arr[2] < arr[1]){
+      swap(arr[1], arr[2]);
+      if (arr[1] < arr[0])
+        swap(arr[1], arr[0]);
+    }
+    f0[i] = arr[1];
+  }
+  /// \DONE Implementado filtro de mediana de 3 posiciones.
+#endif
 
   // Write f0 contour into the output file
   ofstream os(output_txt);
