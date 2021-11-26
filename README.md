@@ -102,12 +102,15 @@ A continuación mostramos el código correspondiente:
 	
 	*****Captura 12*****
 	
-	
-
+	Con el sistema de decisión mejorado llegamos un 90,41% de score.
 
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
 	 el uso de alternativas de mayor calidad (particularmente Python).
+	 
+	 A continuación se puede apreciar una gráfica con la implementación del filtro de mediana.
+	 
+	 *****Captura 13*****
    
 
 Ejercicios de ampliación
@@ -122,6 +125,21 @@ Ejercicios de ampliación
 
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
+    
+    Ahora utilizamos la libreria  docopt para pasar por la terminal los thresholds para los diferentes parámetros que definen si una señal es sorda o sonora. Lo primero que hacemos es cambiar eL USAGE en get_pitch:
+    
+    ****Captura 14*****
+    
+    A continuación recuperamos los valores determinados en consola:
+    
+    *****Captura 15*****
+    
+    Para finalizar, cambiamos el ptch_analyzer.h para usar los nuevos thresholds y modificamos los valores que escribiamos en el script, los sustituimos las nuevas variables Mensaje de ayuda:
+    
+    *****Captura 16*****
+    
+    Hacemos una comparacion con f0ref y obtenemos el mismo valor que cuando cambiamos los thresholds que hemos creado por los umbrales que tenemos por defecto.
+    
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de detección
   de pitch.
@@ -146,6 +164,36 @@ Ejercicios de ampliación
   También se valorará la realización de un estudio de los parámetros involucrados. Por ejemplo, si se opta
   por implementar el filtro de mediana, se valorará el análisis de los resultados obtenidos en función de
   la longitud del filtro.
+  
+  
+  **Implementación del Center Clipping**
+  
+  El principal objetivo de aplicar esta técnica de preprocesado es la de conseguir mejores resultados frente al ruido. Con este objetivo, lo que hacemos es poner 0 los instantes de tiempo en que la amplitud del audio es baja, y elevar la intensidad de los armónicos de orden alto. Hemos implementado el clipping con offset primero y después sin offset:
+  
+  *****Captura 17*****
+  
+  Hemos detectado que obtenemos mejores resultados con el clipping con offset.
+  
+  **Implementación de la ventana de Hamming**
+  
+  A partir de la fórmula de la ventana de Hamming hemos hecho el siguiente código:
+
+  *****Captura 18*****
+  
+  
+   **Implementación del filtro de Mediana**
+   
+   Esta tecnica de postprocesado se trata de coger un entorno de cada una de las muestras y mirar cual es el valor mediano. Es decir, cogemos la muestra anterior, la actual y la siguiente y de estas 3 muestras nos quedamos con el valor intermedio (filtro de mediana de longitud 3). Lo hacemos asi porque sabemos que la evolucion del pitch es una evolucion suave, con este filtrado de mediana eliminamos los saltos bruscos. A continuacion vemos el codigo que hemos implementado:
+   
+   *****Captura 19*****
+   
+   Con tal de apreciar la mejora esta tecnica de postprocesado mostramos dos graficas; la primera grafica pertenece a la del pitch sin aplicar el filrado de mediana y la segunda es la grafica del pitch aplicando el filtro:
+   
+    *****Captura 20*****
+    
+    *****Captura 21*****
+    
+    
    
 
 Evaluación *ciega* del detector
