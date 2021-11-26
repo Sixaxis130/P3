@@ -52,7 +52,7 @@ A continuación mostramos el código correspondiente:
 
    Para el caso de las tramas sonoras detectadas como sordas (UV), consideramos que la mejor opción es diferenciarlas aplicando autocorrelaciones. Con tal de poder descartar la mayoría de las tramas sonoras que detectamos como sordas (VU), consideramos que una buena opción es usando la potencia.
    
-          <img width="750" alt="Captura de Pantalla 2021-11-26 a les 22 00 25" src="https://user-images.githubusercontent.com/91251152/143644514-c15756a1-1d68-4233-8128-7985e3a5bf28.png">
+  <img width="750" alt="Captura de Pantalla 2021-11-26 a les 22 00 25" src="https://user-images.githubusercontent.com/91251152/143644514-c15756a1-1d68-4233-8128-7985e3a5bf28.png">
 
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
