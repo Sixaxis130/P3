@@ -82,20 +82,28 @@ A continuación mostramos el código correspondiente:
 	
 	*****Captura 10*****
 	
-	Obervamos que donde tenemos segmentos sonoros, tanto la autocorrelacion normalizadas de 1 como la normalizada en el pitch tienen un valor cercano a 1. Esto tiene todo el sentido del mundo, ya que las muestras cercanas de las tramas de voz son muy parecidas entre ellas.
+	Obervamos que donde tenemos segmentos sonoros, tanto la autocorrelacion normalizadas de 1 como la normalizada en el pitch tienen un valor cercano a 1. Esto tiene todo el sentido del mundo, ya que las muestras cercanas de las tramas de voz son muy parecidas entre ellas. Para nuestro audio en particular podemos decir que para la autocorrelacion normalizada en de 1 por encima de 0,8 es una trama de voz. En cambio, para la autocorrelacion normalizada en el pitch hemos decidido que para valores mayores a 0,38 decidimos que se trata de una trama de voz.
 	
 
       - Use el detector de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
 		ilustrativa del resultado de ambos detectores.
 		
-	A continuacion vemos la estimacion del pitch de wavesurfer, la estimacion de pitch de nuestra mejor version y por ultimo la señal rl001.wav:
+	A continuacion vemos la estimacion del pitch de wavesurfer, la estimacion de pitch de nuestra mejor version y por ultimo la señal rl006.wav:
 		
 	*****Captura 11*****	
   
   * Optimice los parámetros de su sistema de detección de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
+	
+	
+	Ahora para optimizar los parámetros de nuestro sistema de detección pescindiremos de la variables estáticas como comentamos en el laboratorio. Además, nos hemos dado cuenta que la potencia es alta cuando el locutor habla aunque tambien lo es en tramas ruidosas. Como las potencias y las autocorrelaciones no encajan de forma óptima para decidir si una trama es sonora o sorda, entonces hemos convenido en usar puertas OR y definir de forma inversa las inecuaciones. Por lo tanto nos queda de la siguiente manera:
+	
+	*****Captura 12*****
+	
+	
+
 
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
