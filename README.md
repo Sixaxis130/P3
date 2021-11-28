@@ -125,6 +125,8 @@ A continuación mostramos el código correspondiente:
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
 	 el uso de alternativas de mayor calidad (particularmente Python).
 	 
+	 Recordamos que debemos tener el XLaunch ejecutandose para poder representar graficas al no estar trabajando en un entorno grafico por defecto. El codigo que hemos implementado está disponible dentro de src/get_pitch con el nombre de Representacion_Pitch.py
+	 
 	 A continuación se puede apreciar una gráfica con la implementación del filtro de mediana con nuestra primera versión.
 	 
 	 <img width="604" alt="Captura de Pantalla 2021-11-26 a les 22 41 13" src="https://user-images.githubusercontent.com/91251152/143656765-04bcf3f0-89d8-4653-808c-62022614e87e.png">
