@@ -27,7 +27,9 @@ A continuación mostramos el código correspondiente:
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la librería matplotlib de Python.
 	 
-	 Fonema sonoro de 30ms grabado por nosotros:
+	 Para ver con claridad la autocorrelación de la señal y la posición del primer máximo secundario, decidimos hacer uso del lenguaje Python para implementar mediante la librería matplotlib una representación para que sea más facil el analisis. Recordamos que debemos tener el XLaunch ejecutandose para poder representar graficas al no estar trabajando en un entorno grafico por defecto. El codigo que hemos implementado está disponible dentro de src/get_pitch con el nombre de Representacion_Autocorrelacion.py
+	 
+	 Fonema sonoro de 30ms grabado por nosotros (pav434-1_30ms.wav):
 	 
 	 <img width="694" alt="Captura de Pantalla 2021-11-26 a les 21 52 40" src="https://user-images.githubusercontent.com/91251152/143638758-cc4573db-b76a-4f9f-ab70-689ba3123c66.png">
 	 
@@ -35,10 +37,12 @@ A continuación mostramos el código correspondiente:
 
 	 <img width="768" alt="Captura de Pantalla 2021-11-26 a les 21 53 06" src="https://user-images.githubusercontent.com/91251152/143639092-4945d567-0844-42b8-a781-5e612c4f6b65.png">
 	 
-	 Como vemos, por culpa de la baja calidad del micrófono con el que grabamos, obtenemos una señal un tanto ruidosa, por ello decidimos utilizar una señal más limpia.
+	 Como vemos, por culpa de la baja calidad del micrófono con el que grabamos, obtenemos una señal un tanto ruidosa dificultando el analisis de la zona periodica, por ello decidimos utilizar una señal más limpia (aud_limpio_30ms.wav).
 	 
 	  <img width="674" alt="Captura de Pantalla 2021-11-26 a les 21 57 26" src="https://user-images.githubusercontent.com/91251152/143642303-0f69f9ee-1436-4aef-a50b-5669a6f86e41.png">
-
+	  
+	 Para poder observar el primer máximo secundario de forma más clara hacemos zoom en la parte izquierda:
+	 
 	  <img width="659" alt="Captura de Pantalla 2021-11-26 a les 21 57 45" src="https://user-images.githubusercontent.com/91251152/143642535-cf7769ad-72e4-4957-aa31-48579af6bc65.png">
 
 	  
@@ -50,7 +54,7 @@ A continuación mostramos el código correspondiente:
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
 
-   Para el caso de las tramas sonoras detectadas como sordas (UV), consideramos que la mejor opción es diferenciarlas aplicando autocorrelaciones. Con tal de poder descartar la mayoría de las tramas sonoras que detectamos como sordas (VU), consideramos que una buena opción es usando la potencia.
+   Como primera implementación que hicimos en clase, desarrollamos una mejora para la comprobación del threshold de la correlación normalizada del pitch para decidir si era voz sonota o sorda a través de un if(). Como es de esperar, esto es muy mejorable gracias a los otros parametros que recibimos de la cabecera de la función. Obtenniendo así una segunda versión donde para el caso de las tramas sonoras detectadas como sordas (UV), consideramos que la mejor opción es diferenciarlas aplicando autocorrelaciones. Con tal de poder descartar la mayoría de las tramas sonoras que detectamos como sordas (VU), consideramos que una buena opción es usando la potencia.
    
   <img width="750" alt="Captura de Pantalla 2021-11-26 a les 22 00 25" src="https://user-images.githubusercontent.com/91251152/143644514-c15756a1-1d68-4233-8128-7985e3a5bf28.png">
 
@@ -73,13 +77,13 @@ A continuación mostramos el código correspondiente:
 		
 	Si nos fijamos en la potencia, podemos apreciar de forma bastante clara la diferencia de potencia entre los intervalos silenciosos y sonoros.
 	
-	Utilizamos la libreria de entrada/salida de C++ con tal de poder conseguir los valores de la autocorrelacion, ademas, empleamos la funcion cout que nos permite mostrar por consola la informacion para cada trama.
+	Utilizamos la libreria de entrada/salida de C++ con tal de poder conseguir los valores de la autocorrelacion, ademas, empleamos la funcion cout que nos permite mostrar por consola la informacion para cada trama de la potencia, la autorrelación en 1 y la autocorrelación del pitch.
 	
 	<img width="749" alt="Captura de Pantalla 2021-11-26 a les 22 07 52" src="https://user-images.githubusercontent.com/91251152/143649854-ade38979-5556-4d3d-9cd8-b0f5e451e90f.png">
 	
-	El if que tenemos asignado a 0 con tal de ver los valores por la terminal lo asignamos a 1.
+	El if() que tenemos asignado a 0, con tal de ver los valores por la terminal lo asignamos a 1.
 
-	A continuacion, mediante la terminal conseguimos que la salida se escriba en un fichero .out en vez de mostrarla en la terminal. Mas adelante, para poder observar la funcion r(lag)/r(0) y r(1)/r(0), mediante el comando cut reducimos las columnas en cuestion y lo colocamos en otros dos archivos que finalmente los añadiremos en el wavesurfer.
+	A continuacion, mediante la terminal conseguimos que la salida se escriba en un fichero .out además de mostrarla en la terminal. Mas adelante, para poder observar la funcion r(lag)/r(0) y r(1)/r(0), mediante el comando cut reducimos las columnas en cuestion y lo colocamos en otros dos archivos que finalmente los añadiremos en el wavesurfer.
 	
 	<img width="750" alt="Captura de Pantalla 2021-11-26 a les 22 11 14" src="https://user-images.githubusercontent.com/91251152/143652262-48215f84-7f3b-4e6d-9723-a950f74a8fda.png">
 	
@@ -87,7 +91,7 @@ A continuación mostramos el código correspondiente:
 	
 	<img width="753" alt="Captura de Pantalla 2021-11-26 a les 22 12 26" src="https://user-images.githubusercontent.com/91251152/143653072-dc6b86ea-13d5-4998-aa36-11200dff2240.png">
 
-	Obervamos que donde tenemos segmentos sonoros, tanto la autocorrelacion normalizada de 1 como la normalizada en el pitch tienen un valor cercano a 1. Esto tiene todo el sentido del mundo, ya que las muestras cercanas de las tramas de voz son muy parecidas entre ellas. Para nuestro audio en particular podemos decir que para la autocorrelacion normalizada en de 1 por encima de 0,9 es una trama de voz. En cambio, para la autocorrelacion normalizada en el pitch hemos decidido que para valores mayores a 0,5 entonces se trata de una trama de voz.
+	Obervamos que donde tenemos segmentos sonoros, tanto la autocorrelacion normalizada de 1 como la normalizada en el pitch tienen un valor cercano a 1. Esto tiene todo el sentido del mundo, ya que las muestras cercanas de las tramas de voz son muy parecidas entre ellas. Para nuestro audio en particular podemos decir que para la autocorrelacion normalizada en de 1 por encima de 0,9 es una trama de voz. En cambio, para la autocorrelacion normalizada en el pitch hemos decidido que para valores mayores a 0,5 entonces se trata de una trama de voz. Estos valores los modificamos más adelante al optimizar los parametros de detección de pitch.
 	
 
       - Use el detector de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
@@ -100,7 +104,7 @@ A continuación mostramos el código correspondiente:
 	
 	<img width="755" alt="Captura de Pantalla 2021-11-26 a les 22 19 33" src="https://user-images.githubusercontent.com/91251152/143655713-3705594c-a1c6-4606-8d3e-d655a67e0f58.png">
 	
-	Como vemos, el resultado no es del todo bueno, por ello decidimos implementar una segunda version del programa para optimazarlo obteniendo los siguientes resultados:
+	Como vemos, el resultado no es del todo bueno, por ello decidimos implementar una segunda version del programa donde se parece más a la señal de controno de pitch rl006.foref y también se aproxima más al contorno que nos da el wavesurfer. Obteniendo los siguientes resultados:
 	
 	<img width="756" alt="Captura de Pantalla 2021-11-26 a les 22 21 54" src="https://user-images.githubusercontent.com/91251152/143655872-fc048462-7303-436f-b40f-339faa082668.png">
   
@@ -109,11 +113,11 @@ A continuación mostramos el código correspondiente:
 	`pitch_db/train`..
 	
 	
-	Con el objetivo optimizar los parámetros de nuestro sistema de detección prescindiremos de las variables estáticas como comentamos en el laboratorio. Además, nos hemos dado cuenta que la potencia es alta cuando el locutor habla aunque tambien lo es en tramas ruidosas. Como las potencias y las autocorrelaciones no encajan de forma óptima para decidir si una trama es sonora o sorda, a causa de esto hemos decido utilizar puertas OR al ser mas convenientes y definir de forma inversa las inecuaciones al ser en los casos donde surgen mas dudas. Por lo tanto nos queda de la siguiente manera:
+	Con el objetivo de optimizar los parámetros de nuestro sistema de detección prescindiremos de las variables estáticas como comentamos en el laboratorio. En el desarrollo de la práctica nos hemos dado cuenta que la potencia es alta cuando el locutor habla pero tambien lo es en tramas ruidosas. Otra cosa importante es que las potencias y las autocorrelaciones no encajan de forma óptima para decidir si una trama es sonora o sorda, a causa de esto hemos decido utilizar puertas OR al ser mas convenientes y definir de forma inversa las inecuaciones al ser en los casos donde surgen mas dudas. Por lo tanto nos queda una optimización del analisis por parametros de la siguiente manera:
 	
 	<img width="751" alt="Captura de Pantalla 2021-11-26 a les 22 28 56" src="https://user-images.githubusercontent.com/91251152/143656192-4869d7ea-cc00-4c31-9ead-327cbe00ce74.png">
 
-	Implementando Ventana de Hamming, Center Clipping y Filtro de Mediana obtenemos on el sistema de decisión mejorado un resultado de un 90,41%. Con los parametros de decision optimizados de: Potencia = -20dBs, Autocorrelacion en 1 = 0,8 y la Autocorrelacion en el pitch = 0,38.
+	Implementando Ventana de Hamming, Center Clipping y Filtro de Mediana obtenemos con el sistema de decisión mejorado un resultado de un 90,41%. Los parametros que hemos encontrado que más optimizan el resultado son: Potencia = -20dBs, Autocorrelacion en 1 = 0,8 y la Autocorrelacion en el pitch = 0,38.
 	
 	<img width="748" alt="Captura de Pantalla 2021-11-26 a les 22 38 17" src="https://user-images.githubusercontent.com/91251152/143656623-1c8ade17-208f-4843-87b9-6e8cdb984dbb.png">
 
@@ -121,17 +125,17 @@ A continuación mostramos el código correspondiente:
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
 	 el uso de alternativas de mayor calidad (particularmente Python).
 	 
-	 A continuación se puede apreciar una gráfica con la implementación del filtro de mediana.
+	 A continuación se puede apreciar una gráfica con la implementación del filtro de mediana con nuestra primera versión.
 	 
 	 <img width="604" alt="Captura de Pantalla 2021-11-26 a les 22 41 13" src="https://user-images.githubusercontent.com/91251152/143656765-04bcf3f0-89d8-4653-808c-62022614e87e.png">
 
 	 
-	 Como vemos obtuvimos una primera versión con resultados no del todo buenos para la deteccion del pitch, por ello decidimos mejorarlo obteniendo los siguientes resultados:
+	 Como vemos obtuvimos una primera versión con resultados no del todo buenos para la deteccion del pitch, por ello decidimos mejorarlo con un filtro de mediana de 3 posiciones más optimizado, obteniendo los siguientes resultados:
 	 
 	 
         <img width="555" alt="Captura de Pantalla 2021-11-26 a les 22 42 34" src="https://user-images.githubusercontent.com/91251152/143656824-3c929923-6c87-4a9b-acf3-15096ef745c8.png">
 	
-	Apreciamos en esta ultima version la mejora de la deteccion del pitch, en la primera parte del reconocimiento de pitch no se aprecia mucho la mejora, pero en la segunda mitad obtenemos una mejora muy importante detectando de forma muy acurada la señal del pitch.
+	Apreciamos en esta ultima version la mejora de la deteccion del pitch, en la primera parte del reconocimiento de pitch no se aprecia mucho la mejora, pero en la segunda mitad obtenemos una mejora muy importante detectando de forma muy acurada la señal del pitch, ensanchando el rango que reconoce respecto al anterior y reconociendo casi completamente los últimos contornos de pitch.
 
 
 Ejercicios de ampliación
@@ -147,15 +151,15 @@ Ejercicios de ampliación
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
     
-    Ahora utilizamos la libreria  docopt para pasar por la terminal los thresholds para los diferentes parámetros que definen si una señal es sorda o sonora. Lo primero que hacemos es cambiar eL USAGE en get_pitch:
+    Ahora utilizamos la libreria  docopt para pasar por la terminal los thresholds para los diferentes parámetros que definen si una señal es sorda o sonora. Lo primero que hacemos es cambiar el USAGE en get_pitch:
     
     <img width="753" alt="Captura de Pantalla 2021-11-26 a les 22 48 53" src="https://user-images.githubusercontent.com/91251152/143657174-bba9243b-e8d9-4cf8-a2cc-8736b4948929.png">
 
-    A continuación recuperamos los valores especificados en la terminal como hicimos con el threshold 1 en el laboratorio:
+    A continuación cogemos los valores especificados en la terminal como hicimos con el threshold 1 en el laboratorio mediante el main():
     
     <img width="692" alt="Captura de Pantalla 2021-11-26 a les 22 51 30" src="https://user-images.githubusercontent.com/91251152/143657328-a9d9e24f-5021-4373-810f-e3c0a1c0820e.png">
  
-    Para finalizar, cambiamos el pitch_analyzer.h para poder utilizar los nuevos thresholds y modificamos los valores que tenemos por defecto del mensaje de ayuda por los mas optimos que hemos encontrado:
+    Para finalizar, cambiamos el pitch_analyzer.h para poder utilizar los nuevos thresholds y modificamos los valores que tenemos por defecto del mensaje de ayuda por los más óptimos que hemos encontrado:
     
     <img width="749" alt="Captura de Pantalla 2021-11-26 a les 22 59 59" src="https://user-images.githubusercontent.com/91251152/143657742-c180ce08-97c5-4d28-93d9-b44844f1f028.png">
 
@@ -193,7 +197,7 @@ Ejercicios de ampliación
   
   <img width="749" alt="Captura de Pantalla 2021-11-26 a les 23 07 31" src="https://user-images.githubusercontent.com/91251152/143658090-76691330-39da-4930-b3f5-a8f9a86cdb3e.png">
 
-  Hemos detectado que obtenemos mejores resultados implementando el clipping sin offset.
+  Hemos detectado que obtenemos mejores resultados implementando el clipping sin offset así que utilizamos este.
   
   **Implementación de la ventana de Hamming**
   
