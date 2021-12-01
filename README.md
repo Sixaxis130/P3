@@ -119,7 +119,8 @@ A continuación mostramos el código correspondiente:
 
 	Implementando Ventana de Hamming, Center Clipping y Filtro de Mediana obtenemos con el sistema de decisión mejorado un resultado de un 90,41%. Los parametros que hemos encontrado que más optimizan el resultado son: Potencia = -20dBs, Autocorrelacion en 1 = 0,8 y la Autocorrelacion en el pitch = 0,38.
 	
-	<img width="748" alt="Captura de Pantalla 2021-11-26 a les 22 38 17" src="https://user-images.githubusercontent.com/91251152/143656623-1c8ade17-208f-4843-87b9-6e8cdb984dbb.png">
+	<img width="592" alt="Captura de Pantalla 2021-12-01 a les 23 03 25" src="https://user-images.githubusercontent.com/91251152/144321388-d8774ca2-68e6-4983-a986-b43bb507f048.png">
+
 
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
@@ -155,7 +156,7 @@ Ejercicios de ampliación
     
     Ahora utilizamos la libreria  docopt para pasar por la terminal los thresholds para los diferentes parámetros que definen si una señal es sorda o sonora. Lo primero que hacemos es cambiar el USAGE en get_pitch:
     
-    <img width="753" alt="Captura de Pantalla 2021-11-26 a les 22 48 53" src="https://user-images.githubusercontent.com/91251152/143657174-bba9243b-e8d9-4cf8-a2cc-8736b4948929.png">
+    <img width="601" alt="Captura de Pantalla 2021-12-01 a les 23 05 01" src="https://user-images.githubusercontent.com/91251152/144321554-c3645cf9-91e5-4534-9d93-a6823a7f0c29.png">
 
     A continuación cogemos los valores especificados en la terminal como hicimos con el threshold 1 en el laboratorio mediante el main():
     
