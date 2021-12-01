@@ -117,9 +117,9 @@ A continuación mostramos el código correspondiente:
 	
 	<img width="751" alt="Captura de Pantalla 2021-11-26 a les 22 28 56" src="https://user-images.githubusercontent.com/91251152/143656192-4869d7ea-cc00-4c31-9ead-327cbe00ce74.png">
 
-	Implementando Ventana de Hamming, Center Clipping y Filtro de Mediana obtenemos con el sistema de decisión mejorado un resultado de un 90,69%. Los parametros que hemos encontrado que más optimizan el resultado son: Potencia = -20dBs, Autocorrelacion en 1 = 0,826 y la Autocorrelacion en el pitch = 0,36.
+	Implementando Ventana de Hamming, Center Clipping y Filtro de Mediana obtenemos con el sistema de decisión mejorado un resultado de un 90,71%. Los parametros que hemos encontrado que más optimizan el resultado son: Potencia = -23,7dBs, Autocorrelacion en 1 = 0,826, la Autocorrelacion en el pitch = 0,359 y un umbral de center clipping de 0,00007. Siendo el resultado más óptimo que hemos obtenido mediante los parámetros mencionados.
 	
-	<img width="592" alt="Captura de Pantalla 2021-12-01 a les 23 03 25" src="https://user-images.githubusercontent.com/91251152/144321388-d8774ca2-68e6-4983-a986-b43bb507f048.png">
+	<img width="601" alt="Captura de Pantalla 2021-12-01 a les 23 25 08" src="https://user-images.githubusercontent.com/91251152/144323992-a9200904-0fa2-4c9f-a0f7-96164c20d55a.png">
 
 
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
@@ -156,7 +156,7 @@ Ejercicios de ampliación
     
     Ahora utilizamos la libreria  docopt para pasar por la terminal los thresholds para los diferentes parámetros que definen si una señal es sorda o sonora. Lo primero que hacemos es cambiar el USAGE en get_pitch:
     
-    <img width="601" alt="Captura de Pantalla 2021-12-01 a les 23 05 01" src="https://user-images.githubusercontent.com/91251152/144321554-c3645cf9-91e5-4534-9d93-a6823a7f0c29.png">
+    <img width="600" alt="Captura de Pantalla 2021-12-01 a les 23 26 23" src="https://user-images.githubusercontent.com/91251152/144324154-c61ef919-de93-4593-945a-6e98014a3265.png">
 
     A continuación cogemos los valores especificados en la terminal como hicimos con el threshold 1 en el laboratorio mediante el main():
     
