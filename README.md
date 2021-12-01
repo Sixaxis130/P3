@@ -164,7 +164,7 @@ Ejercicios de ampliación
  
     Para finalizar, cambiamos el pitch_analyzer.h para poder utilizar los nuevos thresholds y modificamos los valores que tenemos por defecto del mensaje de ayuda por los más óptimos que hemos encontrado:
     
-    <img width="749" alt="Captura de Pantalla 2021-11-26 a les 22 59 59" src="https://user-images.githubusercontent.com/91251152/143657742-c180ce08-97c5-4d28-93d9-b44844f1f028.png">
+    <img width="599" alt="Captura de Pantalla 2021-12-01 a les 23 38 29" src="https://user-images.githubusercontent.com/91251152/144325654-a8b3e9e2-fa3d-49f7-9370-1117a3817a06.png">
 
     Hacemos comparaciones con f0ref y vemos que no cambia el resultado respecto a hacerlo por consola o en el propio codigo.
     
