@@ -25,9 +25,9 @@ Usage:
     get_pitch --version
 
 Options:
-    -1 FLOAT, --thresh1 FLOAT  Umbral sonoro sordo para autocorrelacion normalizada en pitch (rmaxnorm) [default: 0.38]
-    -2 FLOAT, --thresh_r1 FLOAT  Umbral para autocorrelacion normalizada en 1 (r1norm) [default: 0.8]
-    -3 FLOAT, --thresh_p FLOAT  Umbral dBs para potencia (pot) [default: -20.0]
+    -1 FLOAT, --thresh1 FLOAT  Umbral sonoro sordo para autocorrelacion normalizada en pitch (rmaxnorm) [default: 0.359]
+    -2 FLOAT, --thresh_r1 FLOAT  Umbral para autocorrelacion normalizada en 1 (r1norm) [default: 0.826]
+    -3 FLOAT, --thresh_p FLOAT  Umbral dBs para potencia (pot) [default: -23.7]
     -4 FLOAT, --thresh_x FLOAT  Umbral center-clipping [default: 0.00007]
     -h, --help  Show this screen
     --version   Show the version of the project
